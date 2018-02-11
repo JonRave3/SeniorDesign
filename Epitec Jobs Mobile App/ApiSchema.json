@@ -1,0 +1,423 @@
+// Epitec Public API Schema
+
+
+// Headers
+{
+    "Api-Key": "keyGoesHere",
+    "Content-Type": "application/json"
+}
+
+
+// Endpoints
+
+// GET api/applicants
+// Description: Returns 10 most recent applicants
+// Path parameters: 
+// Request body:
+// Response:
+{
+    "type": "array",
+    "items": {
+        "id": {
+            "type": "string"
+        },
+        "candidateId": {
+            "type": "string",
+            "required": false
+        },
+        "email": {
+            "type": "string"
+        },
+        "firstName": {
+            "type": "string"
+        },
+        "lastName": {
+            "type": "string"
+        },
+        "createdBy": {
+            "type": "string"
+        },
+        "createdDate": {
+            "type": "string"
+        },
+        "modifiedBy": {
+            "type": "string"
+        },
+        "modifiedDate": {
+            "type": "string"
+        },
+        "phone": {
+            "type": "string"
+        },
+        "resumeUrl": {
+            "type": "string"
+        }
+    }
+}
+//-------------------------------------------
+// GET api/applicants/{id}
+// Description: Get an applicant by ID
+// Path parameters: id (string)
+// Request body:
+// Response:
+{
+    "id": {
+        "type": "string"
+    },
+    "candidateId": {
+        "type": "string",
+        "required": false
+    },
+    "email": {
+        "type": "string"
+    },
+    "firstName": {
+        "type": "string"
+    },
+    "lastName": {
+        "type": "string"
+    },
+    "phone": {
+        "type": "string"
+    }
+}
+//-------------------------------------------
+// POST api/applicants/detail
+// Description: Get an applicant by email or id
+// Path parameters:
+// Request body:
+{
+    "email": {
+        "type": "string",
+        "required": false
+    },
+    "id": {
+        "type": "string",
+        "required": false
+    }
+}
+// Response:
+{
+    "id": {
+        "type": "string"
+    },
+    "candidateId": {
+        "type": "string",
+        "required": false
+    },
+    "email": {
+        "type": "string"
+    },
+    "firstName": {
+        "type": "string"
+    },
+    "lastName": {
+        "type": "string"
+    },
+    "phone": {
+        "type": "string"
+    }
+}
+//-------------------------------------------
+// POST api/applicants
+// Description: Create or update an applicant, if an applicant is found with a matching email or ID it updates
+// Path parameters:
+// Request body:
+{
+    "id": {
+        "type": "string",
+        "required": false
+    },
+    "candidateId": {
+        "type": "string",
+        "required": false
+    },
+    "email": {
+        "type": "string"
+    },
+    "firstName": {
+        "type": "string"
+    },
+    "lastName": {
+        "type": "string"
+    },
+    "phone": {
+        "type": "string"
+    },
+    "resumeUrl": {
+        "type": "string"
+    } //this may need to be changed, we can set up an endpoint to accept the file Blob, you can use any image or file url currently, 10 mb limit
+}
+// Response: Applicant id string
+// Note: When they are able to log in this endpoint may need to be changed
+//-------------------------------------------
+// GET api/events
+// Description: Returns 10 most recent events
+// Path parameters: 
+// Request body:
+// Response:
+{
+    "type": "array",
+    "items": {
+        "id": {
+            "type": "string"
+        },
+        "applicantId": {
+            "type": "string",
+            "required": false
+        },
+        "type": {
+            "type": "integer",
+            "enum": [
+                0, // NotSet
+                1, // NewApplication
+                2, // ExistingApplicantApplication
+                3, // UserSearch
+                4, // UserJobView
+                5 // GeneralApplication
+            ]
+        },
+        "value": {
+            "type": "string"
+        },
+        "createdDate": {
+            "type": "string"
+        },
+        "notes": {
+            "type": "string"
+        }
+    }
+}
+//-------------------------------------------
+// POST api/events
+// Description: Creates an event, applications are a type of event
+// Path parameters:
+// Request body:
+{
+    "id": {
+        "type": "string",
+        "required": false
+    },
+    "applicantId": {
+        "type": "string",
+        "required": false
+    },
+    "type": {
+        "type": "integer",
+        "enum": [
+            0, // NotSet
+            1, // NewApplication
+            2, // ExistingApplicantApplication (not in use)
+            3, // UserSearch
+            4, // UserJobView
+            5  // GeneralApplication
+        ]
+    },
+    "value": {
+        "type": "string"
+    },
+    "notes": {
+        "type": "string"
+    } //this is truncated to 500 characters
+}
+// Response: Event id string
+//-------------------------------------------
+// GET api/jobOrders/{id}
+// Description: Returns a job order, up to 3 related jobs and recruiters assigned to the order
+// Path parameters: id (string)
+// Request body:
+// Response:
+{
+    "jobOrder": {
+        "id": {
+            "type": "string"
+        },
+        "active": {
+            "type": "string"
+        },
+        "city": {
+            "type": "string"
+        },
+        "jobTitle": {
+            "type": "string"
+        },
+        "locationId": {
+            "type": "string"
+        },
+        "modifiedDate": {
+            "type": "string"
+        },
+        "datePosted": {
+            "type": "string"
+        },
+        "expirationDate": {
+            "type": "string"
+        },
+        "stateProvince": {
+            "type": "string"
+        },
+        "summary": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "jobType": {
+            "type": "string"
+        },
+        "responsibilities": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "experience": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "skills": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "benefits": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "zipCode": {
+            "type": "string"
+        },
+    },
+    "recruiters": {
+        "type": "array",
+        "items": {
+            "fullName": {
+                "type": "string"
+            },
+            "email": {
+                "type": "string"
+            }
+        }
+    },
+    "relatedJobOrders": {
+        "type": "array",
+        "items": {
+            "id": {
+                "type": "string"
+            },
+            "active": {
+                "type": "string"
+            },
+            "city": {
+                "type": "string"
+            },
+            "jobTitle": {
+                "type": "string"
+            },
+            "locationId": {
+                "type": "string"
+            },
+            "modifiedDate": {
+                "type": "string"
+            },
+            "datePosted": {
+                "type": "string"
+            },
+            "expirationDate": {
+                "type": "string"
+            },
+            "stateProvince": {
+                "type": "string"
+            },
+            "summary": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "jobType": {
+                "type": "string"
+            },
+            "responsibilities": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "experience": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "skills": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "benefits": {
+                "type": "array",
+                "items": {
+                    "type": "string"
+                }
+            },
+            "zipCode": {
+                "type": "string"
+            }
+        }
+    }
+}
+//-------------------------------------------
+// GET api/jobOrders/search
+// Description: 
+// Path parameters:
+// Request body:
+{
+    "limit": {
+        "type": "integer",
+        "required": false,
+        "default": 10
+    },
+    "offset": {
+        "type": "integer",
+        "required": false,
+        "default": 0
+    },
+    "radius": {
+        "type": "integer",
+        "required": false
+    },
+    "search": {
+        "type": "string"
+    },
+    "zip": {
+        "type": "string",
+        "required": false
+    }
+}
+// note: limit and offset are for paging, limit is the page size, offset is how many to skip (set it to page size * page - page size)
+// Response:
+{
+    "totalCount": {
+        "type": "integer"
+    },
+}
+//-------------------------------------------
+/*
+
+public enum EventType
+{
+    NotSet = 0,
+    NewApplication = 1, // use for job applications
+    ExistingApplicantApplication = 2,
+    UserSearch = 3,
+    UserJobView = 4,
+    GeneralApplication = 5 // use for general application
+}
+*/

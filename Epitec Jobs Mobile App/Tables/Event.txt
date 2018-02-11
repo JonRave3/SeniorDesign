@@ -1,0 +1,59 @@
+/****** Object:  Table [dbo].[Event]    Script Date: 1/30/2018 1:04:38 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Event](
+	[Id] [uniqueidentifier] NOT NULL,
+	[CreatedBy] [uniqueidentifier] NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[ModifiedBy] [uniqueidentifier] NULL,
+	[ModifiedDate] [datetime] NOT NULL,
+	[ApplicantId] [uniqueidentifier] NULL,
+	[Type] [int] NOT NULL,
+	[Reviewed] [bit] NULL,
+	[ReviewedDate] [datetime] NULL,
+	[ReviewedBy] [uniqueidentifier] NULL,
+	[Notes] [nvarchar](500) NULL,
+	[Value] [nvarchar](100) NULL,
+	[JobOrderId] [uniqueidentifier] NULL,
+ CONSTRAINT [PK_Event] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+)
+GO
+
+ALTER TABLE [dbo].[Event]  WITH CHECK ADD FOREIGN KEY([ReviewedBy])
+REFERENCES [dbo].[User] ([Id])
+GO
+
+ALTER TABLE [dbo].[Event]  WITH CHECK ADD  CONSTRAINT [FK_dbo.Event_dbo.JobOrder_JobOrderId] FOREIGN KEY([JobOrderId])
+REFERENCES [dbo].[JobOrder] ([Id])
+GO
+
+ALTER TABLE [dbo].[Event] CHECK CONSTRAINT [FK_dbo.Event_dbo.JobOrder_JobOrderId]
+GO
+
+ALTER TABLE [dbo].[Event]  WITH CHECK ADD  CONSTRAINT [FK_Event_Applicant] FOREIGN KEY([ApplicantId])
+REFERENCES [dbo].[Applicant] ([Id])
+GO
+
+ALTER TABLE [dbo].[Event] CHECK CONSTRAINT [FK_Event_Applicant]
+GO
+
+ALTER TABLE [dbo].[Event]  WITH CHECK ADD  CONSTRAINT [FK_Event_User_CreatedBy] FOREIGN KEY([CreatedBy])
+REFERENCES [dbo].[User] ([Id])
+GO
+
+ALTER TABLE [dbo].[Event] CHECK CONSTRAINT [FK_Event_User_CreatedBy]
+GO
+
+ALTER TABLE [dbo].[Event]  WITH CHECK ADD  CONSTRAINT [FK_Event_User_ModifiedBy] FOREIGN KEY([ModifiedBy])
+REFERENCES [dbo].[User] ([Id])
+GO
+
+ALTER TABLE [dbo].[Event] CHECK CONSTRAINT [FK_Event_User_ModifiedBy]
+GO

@@ -1,0 +1,90 @@
+/****** Object:  Table [dbo].[Location]    Script Date: 1/30/2018 1:07:24 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Location](
+	[Id] [uniqueidentifier] NOT NULL,
+	[CustomerId] [uniqueidentifier] NULL,
+	[City] [nvarchar](100) NULL,
+	[Country] [nvarchar](50) NULL,
+	[IsActive] [bit] NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+	[NickName] [nvarchar](30) NULL,
+	[PostalCode] [nvarchar](15) NULL,
+	[StateProvince] [nvarchar](30) NULL,
+	[Street] [nvarchar](200) NULL,
+	[CreatedBy] [uniqueidentifier] NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[ModifiedBy] [uniqueidentifier] NULL,
+	[ModifiedDate] [datetime] NOT NULL,
+	[OldLocationId] [int] NULL,
+	[AddressId] [uniqueidentifier] NOT NULL,
+	[Notes] [nvarchar](max) NULL,
+	[IsDeleted] [bit] NOT NULL,
+	[DeletedBy] [uniqueidentifier] NULL,
+	[DeletedDate] [datetime] NULL,
+	[RowVersion] [timestamp] NOT NULL,
+	[MergedEntityId] [uniqueidentifier] NULL,
+	[IsMerged] [bit] NOT NULL,
+	[MergedBy] [uniqueidentifier] NULL,
+	[MergedDate] [datetime] NULL,
+ CONSTRAINT [PK_dbo.Location] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+)
+GO
+
+ALTER TABLE [dbo].[Location] ADD  DEFAULT ('EF1C64C4-7648-477F-95E1-00149D7F03FC') FOR [AddressId]
+GO
+
+ALTER TABLE [dbo].[Location] ADD  CONSTRAINT [DF__Location__IsDele__39E294A9]  DEFAULT ((0)) FOR [IsDeleted]
+GO
+
+ALTER TABLE [dbo].[Location] ADD  CONSTRAINT [DF_Location_IsMerged]  DEFAULT ((0)) FOR [IsMerged]
+GO
+
+ALTER TABLE [dbo].[Location]  WITH CHECK ADD  CONSTRAINT [FK_dbo.Location_dbo.Address_AddressId] FOREIGN KEY([AddressId])
+REFERENCES [dbo].[Address] ([Id])
+GO
+
+ALTER TABLE [dbo].[Location] CHECK CONSTRAINT [FK_dbo.Location_dbo.Address_AddressId]
+GO
+
+ALTER TABLE [dbo].[Location]  WITH CHECK ADD  CONSTRAINT [FK_dbo.Location_dbo.Customer_CustomerId] FOREIGN KEY([CustomerId])
+REFERENCES [dbo].[Customer] ([Id])
+GO
+
+ALTER TABLE [dbo].[Location] CHECK CONSTRAINT [FK_dbo.Location_dbo.Customer_CustomerId]
+GO
+
+ALTER TABLE [dbo].[Location]  WITH CHECK ADD  CONSTRAINT [FK_dbo.Location_dbo.User_CreatedBy] FOREIGN KEY([CreatedBy])
+REFERENCES [dbo].[User] ([Id])
+GO
+
+ALTER TABLE [dbo].[Location] CHECK CONSTRAINT [FK_dbo.Location_dbo.User_CreatedBy]
+GO
+
+ALTER TABLE [dbo].[Location]  WITH CHECK ADD  CONSTRAINT [FK_dbo.Location_dbo.User_DeletedBy] FOREIGN KEY([DeletedBy])
+REFERENCES [dbo].[User] ([Id])
+GO
+
+ALTER TABLE [dbo].[Location] CHECK CONSTRAINT [FK_dbo.Location_dbo.User_DeletedBy]
+GO
+
+ALTER TABLE [dbo].[Location]  WITH CHECK ADD  CONSTRAINT [FK_dbo.Location_dbo.User_MergedBy] FOREIGN KEY([MergedBy])
+REFERENCES [dbo].[User] ([Id])
+GO
+
+ALTER TABLE [dbo].[Location] CHECK CONSTRAINT [FK_dbo.Location_dbo.User_MergedBy]
+GO
+
+ALTER TABLE [dbo].[Location]  WITH CHECK ADD  CONSTRAINT [FK_dbo.Location_dbo.User_ModifiedBy] FOREIGN KEY([ModifiedBy])
+REFERENCES [dbo].[User] ([Id])
+GO
+
+ALTER TABLE [dbo].[Location] CHECK CONSTRAINT [FK_dbo.Location_dbo.User_ModifiedBy]
+GO

@@ -1,0 +1,48 @@
+/****** Object:  Table [dbo].[NameValue]    Script Date: 1/30/2018 1:09:45 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[NameValue](
+	[Id] [uniqueidentifier] NOT NULL,
+	[Name] [nvarchar](100) NOT NULL,
+	[Description] [nvarchar](200) NULL,
+	[NameValueCategoryId] [nvarchar](128) NOT NULL,
+	[IsActive] [bit] NOT NULL,
+	[IsNotesRequired] [bit] NOT NULL,
+	[CreatedBy] [uniqueidentifier] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
+	[ModifiedBy] [uniqueidentifier] NOT NULL,
+	[ModifiedDate] [datetime] NOT NULL,
+	[OldNameValueId] [int] NULL,
+ CONSTRAINT [PK_dbo.NameValue] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
+)
+GO
+
+ALTER TABLE [dbo].[NameValue]  WITH CHECK ADD  CONSTRAINT [FK_dbo.NameValue_dbo.NameValueCategory_NameValueCategoryId] FOREIGN KEY([NameValueCategoryId])
+REFERENCES [dbo].[NameValueCategory] ([Id])
+GO
+
+ALTER TABLE [dbo].[NameValue] CHECK CONSTRAINT [FK_dbo.NameValue_dbo.NameValueCategory_NameValueCategoryId]
+GO
+
+ALTER TABLE [dbo].[NameValue]  WITH CHECK ADD  CONSTRAINT [FK_dbo.NameValue_dbo.User_CreatedBy] FOREIGN KEY([CreatedBy])
+REFERENCES [dbo].[User] ([Id])
+GO
+
+ALTER TABLE [dbo].[NameValue] CHECK CONSTRAINT [FK_dbo.NameValue_dbo.User_CreatedBy]
+GO
+
+ALTER TABLE [dbo].[NameValue]  WITH CHECK ADD  CONSTRAINT [FK_dbo.NameValue_dbo.User_ModifiedBy] FOREIGN KEY([ModifiedBy])
+REFERENCES [dbo].[User] ([Id])
+GO
+
+ALTER TABLE [dbo].[NameValue] CHECK CONSTRAINT [FK_dbo.NameValue_dbo.User_ModifiedBy]
+GO
+
+
